@@ -1,0 +1,1140 @@
+////////////////////////////////////////////////////////////////////////////
+//                                                                        //
+//                            playGround                                  //
+//                Playfully clever CSS framework...                       //
+//                                                                        //
+////////////////////////////////////////////////////////////////////////////
+//                                                                        //
+//           Thank you for taking the time to check this out!             //
+//                                                                        //
+//                 Hope you'll enjoy using playGround!                    //
+//                                                                        //
+//                   Your feedback is appreciated!                        //
+//                   Mail me at daniel@tipsloq.com                        //
+//                                                                        //
+////////////////////////////////////////////////////////////////////////////
+//                                                                        //
+//                      Created by: Daniel Kovacs                         //
+//                                                                        //
+////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
+//                                IMPORTS                                 //
+////////////////////////////////////////////////////////////////////////////
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans)
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro)
+@import url(https://fonts.googleapis.com/css?family=Raleway)
+@import url(https://fonts.googleapis.com/css?family=Slabo+27px)
+@import url(https://fonts.googleapis.com/css?family=Lora)
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro)
+@import url(https://fonts.googleapis.com/css?family=Arimo)
+@import url(https://fonts.googleapis.com/css?family=PT+Sans)
+
+////////////////////////////////////////////////////////////////////////////
+//                                VARIABLES                               //
+////////////////////////////////////////////////////////////////////////////
+
+$base: #6997F1
+$true: #A7DB69
+$false: #EF6159
+$check: #EFC075
+$note: #A788D8
+$highlight: #E28AAC
+// (Almost) 50 shades of grey
+$grey1: #191D25
+$grey2: #22262D
+$grey3: #2A2E33
+$grey4: #32363A
+$grey5: #3A3D3F
+$grey6: #484B4C
+$grey7: #727575
+$grey8: #939393
+$dark: $grey1
+$first-break: 56em
+$second-break: 40em
+
+////////////////////////////////////////////////////////////////////////////
+//                                MIXINS                                  //
+////////////////////////////////////////////////////////////////////////////
+=gridcalc($maxcols, $cols, $grid-gutter, $pull)
+      float: left
+      width: calc(100% * #{$cols} / #{$maxcols} - #{$grid-gutter})
+      margin-right: calc(#{$grid-gutter} / 2)
+      margin-left: calc(#{$grid-gutter} / 2 + 100% * #{$pull} / #{$maxcols})
+      @media screen and (max-width: $first-break)
+            @if $pull > 0
+                  width: calc(50% - #{$grid-gutter})
+                  margin: initial auto initial auto
+            @else
+                  @if $maxcols > 4 * $cols
+                        width: calc(33% - #{$grid-gutter})
+                        margin-left: calc(#{$grid-gutter} / 2)
+                  @else if $maxcols > 2 * $cols
+                        width: calc(50% - #{$grid-gutter})
+                        margin-left: calc(#{$grid-gutter} / 2)
+                  @else
+                        width: calc(100% - #{$grid-gutter})
+                        margin-left: calc(#{$grid-gutter} / 2)
+      @media screen and (max-width: $second-break)
+            @if $maxcols > 4 * $cols
+                  width: calc(50% - #{$grid-gutter})
+                  margin-left: calc(#{$grid-gutter} / 2)
+            @else
+                  width: calc(100% - #{$grid-gutter})
+                  margin-left: calc(#{$grid-gutter} / 2)
+=clearfix
+      &:after
+            content: " "
+            display: table
+            clear: both
+
+//          If you're using BEM... you're welcome :)
+
+=e($element)
+      &__#{$element}
+            @content
+=m($modifier)
+      &--#{$modifier}
+            @content
+
+//////////////////////////
+//        BUTTONS       //
+//////////////////////////
+
+=ctabutton($bg, $font)
+      display: inline-block
+      padding: 0.5em 1.8em
+      text-decoration: none
+      border: 1px solid darken($bg, 10%)
+      border-radius: 0.2em
+      background-color: $bg
+      box-shadow: inset 0px 1px 1px 0px rgba(255, 255, 255, 0.2), inset 0px -1px 1px 0px rgba(0, 0, 0, 0.2)
+      color: $font
+      &:hover
+            background: darken($bg, 10%)
+=button($bg, $color)
+      padding: 0.2em 0.8em
+      border-radius: 0.1em
+      text-decoration: none
+      border: 1px solid rgba(0,0,0,0.2)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      text-align: center
+      background: $bg
+      color: $color
+      &:hover
+            box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+            background: darken($bg, 20%)
+=pillbutton($c1, $c2)
+      display: inline-block
+      padding: 0.5em 1.8em
+      text-decoration: none
+      border: 2px solid $c1
+      border-radius: 1.5em
+      color: $c1
+      &:hover
+            background: $c1
+            color: $c2
+=pillibutton($c1, $c2)
+      display: inline-block
+      padding: 0.5em 1.8em
+      text-decoration: none
+      border: 2px solid $c1
+      border-radius: 1.5em
+      color: $c1
+      background: $c2
+      &:hover
+            background: transparent
+            color: $c2
+            border: 2px solid $c2
+//////////////////////////
+//       ELEMENTS       //
+//////////////////////////
+
+=topbar($bg, $font)
+      display: block
+      background: linear-gradient( darken($bg, 5%) 0%, darken($bg, 15%) 100%)
+      border-bottom: 2px solid darken($bg, 20%)
+      width: 100%
+      padding: 0.2em
+      color: $font
+      nav
+            display: inline-block
+            float: right
+            font-weight: bold
+            margin-top: 0.5em
+            & * + *
+                  margin-left: 0.5em
+            *
+                  color: inherit
+                  text-decoration: none
+                  padding: 0.5em
+                  &:hover
+                        background: rgba(0, 0, 0, 0.2)
+
+=ribbon($bg, $color)
+      background: $bg
+      color: $color
+      border-top: 1px solid darken($bg, 10%)
+      border-bottom: 1px solid darken($bg, 10%)
+      padding: 0.1em 3em
+      position: absolute
+      top: 1.5em
+      right: -2em
+      transform: rotate(45deg)
+
+=badge($bg, $color)
+      font-size: 0.7em
+      border-radius: 1em
+      padding: 0.1em 0.6em
+      margin-left: 0.4em
+      vertical-align: 0.2em
+      color: $color
+      background-color: $bg
+
+=alert($bg)
+      display: block
+      @extend .card
+      padding: 1em 1em
+      background-color: lighten($bg, 25%)
+      color: darken($bg, 25%)
+
+=callout($bg)
+      display: block
+      border: 1px solid rgba(0,0,0,0.15)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      padding: 1em 1em
+      border-left: .4em solid $bg
+      h1, h2, h3, h4, h5, a
+            color: $bg
+
+=progress($bg, $color)
+      height: 2em
+      background: $color
+      border-right: 1px solid rgba(0,0,0,0.15)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      text-align: center
+      background: $bg
+      span
+            display: inline-block
+            margin-top: 0.2em
+            color: $color
+
+=progress-striped($bg, $color)
+      height: 2em
+      background: $bg
+      background: repeating-linear-gradient(45deg, $bg, $bg 1em, darken($bg, 10%) 1em, darken($bg, 10%) 2em)
+      border-right: 1px solid rgba(0,0,0,0.15)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      text-align: center
+      span
+            display: inline-block
+            margin-top: 0.2em
+            color: $color
+
+=panel($bg, $color)
+      > :first-child
+            background: $bg
+            color: $color
+            padding: 0.4em 1em
+            border-radius: 0.15rem 0.15rem 0 0
+      h1, h2, h3, h4, h5, h6
+            background: $bg
+            color: $color
+      p:not(:first-child), a
+            margin: 0.4em 1em
+
+=table($bg, $color)
+      width: 100%
+      border: 1px solid $bg
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      border-radius: 0.2em
+      border-collapse: collapse
+      tr:last-child, td:first-child
+            border-bottom-left-radius: 0.2em
+      tr:last-child, td:last-child
+            border-bottom-right-radius: 0.2em
+      tr:nth-of-type(even)
+            background: transparentize($bg, 0.8)
+      tbody
+            border-bottom-left-radius: 0.2em
+            border-bottom-right-radius: 0.2em
+      *
+            border: none
+            padding: 0.4em
+      th
+            background: $bg
+            color: $color
+
+=toggle-button($color)
+      display: block
+      width: 2em
+      height: 2em
+      position: fixed
+      top: 1em
+      left: 1em
+      z-index: 1
+      &:hover
+            span
+                  background: lighten($color, 20%)
+      span
+            position: absolute
+            height: 0.3em
+            width: 2em
+            background: $color
+            border-radius: 0.4em
+            &:nth-of-type(2)
+                  margin-top: 0.7em
+            &:nth-of-type(3)
+                  margin-top: 1.4em
+
+=decor($imgurl, $width)
+            padding-right: $width
+            background-image: url('#{$imgurl}')
+            background-position: top right
+            background-repeat: no-repeat
+            background-size: $width
+
+=stack-header($bg, $color)
+      padding: 0.4em 1em
+      background: $bg
+      color: $color
+
+=card($color)
+      border: 1px solid $color
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+////////////////////////////////////////////////////////////////////////////
+//                                PRESETS                                 //
+////////////////////////////////////////////////////////////////////////////
+::selection
+      background-color: $base
+      color: white
+::-moz-selection
+      background-color: $base
+      color: white
+*
+      box-sizing: border-box
+      margin: 0
+      padding: 0
+
+      // Comment out to disable transitions on basic CSS style changes.
+
+      transition: 0.2s
+
+html
+
+      // These fonts go well with playGround. They are loaded from Google Fonts, using imports, above.
+
+      //font-family: 'Open Sans', sans-serif
+      //font-family: 'Raleway', sans-serif
+      //font-family: 'Slabo', sans-serif
+      //font-family: 'Lora', sans-serif
+      //font-family: 'Source Sans Pro', sans-serif
+      //font-family: 'Arimo', sans-serif
+      font-family: 'PT Sans', sans-serif
+
+      // SET FONT SIZE TO YOUR VALUE TO DISABLE AUTOMATIC FONT SIZE ADJUSTMENT!
+
+      font-size: calc(14px + 0.3vmax)
+      -webkit-font-smoothing: antialiased
+      @media screen and (max-width: $first-break)
+            font-size: calc(14px + 0.5vmax)
+      @media screen and (max-width: $second-break)
+            font-size: 18px
+
+      // Darkening the background color gives room for truly white components.
+
+      background-color: #f6f6f6
+
+// Some properties stolen from Nicolas Gallagher's Normalize.css. These are essentials, you can import the whole thing in your finished file.
+
+audio, canvas, progress, video
+      display: inline-block
+img, table, video, canvas, iframe,
+      max-width: 100%
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary
+      display: block
+hr
+      border-width: 1
+      border-style: solid
+      border-color: transparent
+      box-shadow: 0px 3px 2px 1px rgba(0,0,0,0.15)
+h1
+      font-size: 2.25em
+      margin:  0
+h2
+      font-size: 2em
+h3
+      font-size: 1.75em
+h4
+      font-size: 1.5em
+h5
+      font-size: 1.2em
+h6
+      font-size: 0.8em
+p
+      font-size: 1em
+a
+      color: $base
+em
+      font-weight: bold
+      font-style: italic
+b
+      font-weight: bold
+i
+      font-style: italic
+s
+      text-decoration: line-through
+u
+      text-decoration: underline
+sub
+      font-size: .75em
+      vertical-align: baseline
+sup
+      font-size: .75em
+      vertical-align: text-top
+pre
+      font-family: 'Source Code Pro', Monaco, monospace
+      display: block
+      background-color: $dark
+      color: #f5f5f5
+      margin: 0.4em 0.2em 0.4em 0.2em
+      padding: .4em
+      code
+            font-family: 'Source Code Pro', Monaco, monospace
+            background-color: inherit
+            color: inherit
+            font-size: 1em
+            line-height: 1em
+            padding: none
+            border: none
+abbr
+      color: $check
+      border-bottom: 1px dotted $check
+code
+      font-family: 'Source Code Pro', Monaco, monospace
+      background-color: #ddd
+      color: #222
+      font-size: 0.9em
+      line-height: 1em
+      padding: 0 .2em 0 .2em
+      border: 1px solid #999
+mark
+      background-color: $highlight
+samp
+      font-family: 'Source Code Pro', Monaco, monospace
+small
+      font-size: .7em
+kbd
+      font-size: .8em
+      font-weight: bold
+      padding: 0 .2em 0 .2em
+      background-color: white
+      box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.2)
+      border: 1px solid #ccc
+blockquote
+      background-image: url('../img/quotes1.svg'), url('../img/quotes2.svg')
+      background-repeat: no-repeat, no-repeat
+      background-position: top right, bottom left
+      background-size: 3em, 3em
+      width: 30em
+      padding: 1em 3em
+      margin: 1em auto
+////////////////////////////////////////////////////////////////////////////
+//                                CLASSES                                 //
+////////////////////////////////////////////////////////////////////////////
+//////////////////////////
+//      EXTENDABLES     //
+//////////////////////////
+
+.card
+      border: 1px solid rgba(0,0,0,0.15)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2)
+      position: relative
+      overflow: hidden
+.card-r
+      @extend .card
+      border-radius: 0.15em
+//////////////////////////
+//       MODIFIERS      //
+//////////////////////////
+
+.sm
+      font-size: 0.75em !important
+
+.lg
+      font-size: 1.4em !important
+
+.clearfix
+      +clearfix
+
+.textcenter
+      margin: auto !important
+      text-align: center !important
+
+.blockcenter
+      display: block !important
+      margin: auto !important
+
+.spread
+      display: inline-block !important
+      width: 100% !important
+
+.stripped
+      background-color: none !important
+      border: none !important
+
+.inline-text
+      display: inline !important
+
+.inline-child
+      > *
+            display: inline-block
+
+.leftalign
+      text-align: left !important
+
+.disabled
+      background-color: #d5d5d5 !important
+      color: #999 !important
+      cursor: not-allowed !important
+      &:hover
+            background: #d5d5d5 !important
+            color: #999 !important
+
+.left
+      float: left
+.right
+      float: right
+.aligner
+      > *+*
+            margin-top: 1em
+
+.base
+      color: $base
+.true
+      color: $true
+.false
+      color: $false
+.note
+      color: $note
+.highlight
+      color: $highlight
+.check
+      color: $check
+.grey1
+      color: $grey1
+.grey2
+      color: $grey2
+.grey3
+      color: $grey3
+.grey4
+      color: $grey4
+.grey5
+      color: $grey5
+.grey6
+      color: $grey6
+.grey7
+      color: $grey7
+.grey8
+      color: $grey8
+
+.bg-base
+      background: $base
+.bg-true
+      background: $true
+.bg-false
+      background: $false
+.bg-note
+      background: $note
+.bg-highlight
+      background: $highlight
+.bg-check
+      background: $check
+.bg-grey1
+      background: $grey1
+.bg-grey2
+      background: $grey2
+.bg-grey3
+      background: $grey3
+.bg-grey4
+      background: $grey4
+.bg-grey5
+      background: $grey5
+.bg-grey6
+      background: $grey6
+.bg-grey7
+      background: $grey7
+.bg-grey8
+      background: $grey8
+.bg-white
+      background: #ffffff
+
+.margo
+      margin: 0.4em
+
+.img-sm
+      height: 2em
+      float: left
+//////////////////////////
+//         OTHER        //
+//////////////////////////
+
+.top-bar
+      +topbar($base, white)
+
+.brand
+      color: inherit
+      display: inline-block
+
+.top-bar-input
+      vertical-align: super
+      padding: 0.3em
+      width: 30%
+      margin: 0 1em
+      border-radius: 0.2em
+      border: 1px solid rgba(0, 0, 0, 0.2)
+      box-shadow: inset 0px 2px 2px 0px rgba(0, 0, 0, 0.2)
+
+.cta
+      max-width: 60em
+      *+*
+            margin-top: 1em
+
+.cta-button
+      +ctabutton($base, white)
+
+.feature-item
+      +gridcalc(3, 1, 1em, 0)
+      margin-top: 1em
+      margin-bottom: 1em
+      img
+            height: 6em
+            display: block
+            margin: 1em auto
+      h1, h2, h3, h4, h5, h6
+            text-align: center
+      p
+            text-align: justify
+.nav-inline
+      margin: 0.4em 0 0.4em 1em
+      list-style: none
+      a
+            display: inline-block
+
+.close
+      border: 0
+      background: none
+      color: inherit
+      float: right
+      font-size: 1.2em
+      cursor: pointer
+      &:focus
+            outline: none
+
+.subtitle
+      background: $base
+      padding: 2em
+      +clearfix
+
+.subtitle__text
+      color: white
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2)
+
+.media-object
+      header
+            display: table
+            margin: 1em 0 0 1em
+
+.media-img
+      display: table-cell
+      vertical-align: top
+      width: 3em
+
+.media-meta
+      display: table-cell
+      padding-left: 0.5em
+      vertical-align: top
+      width: auto
+
+.media-content
+      margin: 1em
+
+.comments
+      border-top: 1px solid #999
+      background: #f5f5ff
+
+.media-nested
+      margin: 1em 0 0 2em
+      header
+            display: table
+            margin: 1em 0 0 1em
+
+.thumbnail
+      display: inline-block
+      padding: 0.2em
+      h1, h2, h3, h4, h5, h6, p, a
+            margin: 0.4em 0.4em 0.8em 0.4em
+      a
+            display: inline-block
+
+.stack-list
+      list-style: none
+      li
+            display: block
+            padding: 0.4em 1em
+            a
+                  text-decoration: none
+                  &:hover
+                        color: inherit
+
+.panel-nav
+      padding: 0 !important
+      *+*
+            margin-left: -.25em !important
+      a
+            display: inline-block
+            margin: 0
+            padding: 0.4em 1em
+            text-decoration: none
+            color: inherit
+            &:hover
+                  background: $base
+
+.form-glue
+      display: inline-block
+      height: 2em
+      vertical-align: middle
+      input[type="text"]
+            @extend .card
+            white-space: nowrap
+            &:focus
+                  outline: none
+                  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 5em 0px transparentize($base, 0.8)
+.form-glue > :last-child
+      border-radius: 0 0.2em 0.2em 0
+.form-glue > :first-child
+      border-radius: 0.2em 0 0 0.2em
+.form-glue > :not(:first-child)
+      border-left: 0
+.form-glue > :not(:first-child):not(:last-child)
+      border-radius: 0
+      border-left: 0
+.form-glue > *
+      display: inline-block
+      padding: 0.2em 1em
+      white-space: nowrap
+      font-size: 1em
+      min-height: 2em
+      max-height: 2em
+      border-collapse: separate
+      float: left
+.form-glue__label
+      @extend .card
+      color: #666
+      text-align: center
+.form-glue__text
+      white-space: nowrap
+      @extend .card
+      width: 100%
+
+      &:focus
+            outline: none
+            box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 5em 0px transparentize($base, 0.8)
+.form-glue__check
+      width: 2em
+      position: relative
+      border: 1px solid rgba(0,0,0,0.2)
+      box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 3px 0px rgba(0,0,0,0.2)
+      padding: 0
+      display: flex
+      align-items: center
+      label
+            width: 1.2em
+            height: 1.2em
+            border-radius: .1em
+            margin: auto
+            background-color: transparent
+            &:hover
+                  background-color: transparentize($base, 0.7)
+      input[type=checkbox]
+            display: none
+            &:checked + label
+                  background-color: $base
+.progress-bar
+      height: 2em
+      background: #ccc
+      @extend .card
+////////////////////////////////////////////////////////////////////////////
+//                                LAYOUT                                  //
+////////////////////////////////////////////////////////////////////////////
+
+.holder
+      width: 100%
+      display: block
+      +clearfix
+
+.land
+      min-height: 100vh
+      width: 100%
+      background: white
+
+.flexcenter
+      display: flex
+      align-items: center
+      justify-content: center
+
+.hero
+      height: auto
+      background: white
+      width: 100%
+      padding: 1em
+
+.rainbow-separator
+      height: 0.4em
+      width: 100%
+      background: linear-gradient(to right, $false 0%, 16.6%, $check 33.3%, $true 50%, $base 66.6%, $note 83.3%, $highlight 100%)
+
+.container
+      width: 100%
+      max-width: 60em
+      margin: auto
+      +clearfix
+
+.subwrapper
+      +gridcalc(3,1,1em,1)
+
+.wall
+      +gridcalc(3, 2, 1em, 0)
+      margin-top: 1em
+      margin-bottom: 1em
+      > * + *
+            margin-top: 1em
+
+.content-bar
+      +gridcalc(3, 1, 1em, 0)
+      margin-top: 1em
+      margin-bottom: 1em
+      > * + *
+            margin-top: 1em
+
+.stack-glue
+      display: block
+      width: 100%
+      input[type="text"]
+            @extend .card
+            white-space: nowrap
+            height: 2em
+            font-size: 1em
+            line-height: 1em
+            &:focus
+                  outline: none
+                  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2), inset 0px 0px 5em 0px transparentize($base, 0.8)
+      > *
+            width: 100%
+            display: block
+            padding-top: 0.4em
+            padding-bottom: 0.4em
+      *+*
+            border-top: 0 !important
+      > :last-child
+            border-radius: 0 0 0.2em 0.2em
+            li:last-of-type
+                  border-radius: 0 0 0.2em 0.2em
+      > :first-child
+            border-radius: 0.2em 0.2em 0 0
+            li:first-of-type
+                  border-radius: 0.2em 0.2em 0 0
+
+.stack-glue-list
+      @extend .stack-glue
+      a
+            color: #333
+
+.table
+      +table(#ccc, $dark)
+
+.bottom-footer
+      width: 100%
+      background-color: $dark
+      color: #999
+      +clearfix
+
+.bottom-footer__item
+      margin-top: 1em
+      margin-bottom: 1em
+      display: inline-block
+      +gridcalc(3, 1, 0.4em, 0)
+
+////////////////////////////////////////////////////////////////////////////
+//                             PRECOMPILED                                //
+////////////////////////////////////////////////////////////////////////////
+
+.ribbon--base
+      +ribbon($base, white)
+.ribbon--true
+      +ribbon($true, white)
+.ribbon--false
+      +ribbon($false, white)
+.ribbon--note
+      +ribbon($note, white)
+.ribbon--check
+      +ribbon($check, white)
+.ribbon--highlight
+      +ribbon($highlight, white)
+
+.badge--base
+      +badge($base, white)
+.badge--false
+      +badge($false, white)
+.badge--true
+      +badge($true, white)
+.badge--check
+      +badge($check, white)
+.badge--note
+      +badge($note, white)
+.badge--highlight
+      +badge($highlight, white)
+
+.alert--false
+      +alert($false)
+.alert--true
+      +alert($true)
+.alert--base
+      +alert($base)
+.alert--highlight
+      +alert($highlight)
+.alert--check
+      +alert($check)
+.alert--note
+      +alert($note)
+
+.callout
+      +callout(rgba(0,0,0,0.2))
+.callout--base
+      +callout($base)
+.callout--true
+      +callout($true)
+.callout--false
+      +callout($false)
+.callout--check
+      +callout($check)
+.callout--highlight
+      +callout($highlight)
+.callout--note
+      +callout($note)
+
+.progress
+      +progress(white, $dark)
+.progress--base
+      +progress($base, white)
+.progress--true
+      +progress($true, white)
+.progress--false
+      +progress($false, white)
+.progress--check
+      +progress($check, white)
+.progress--note
+      +progress($note, white)
+.progress--highlight
+      +progress($highlight, white)
+
+.progress-striped
+      +progress-striped(white, $dark)
+.progress--base-striped
+      +progress-striped($base, white)
+.progress--true-striped
+      +progress-striped($true, white)
+.progress--false-striped
+      +progress-striped($false, white)
+.progress--check-striped
+      +progress-striped($check, white)
+.progress--note-striped
+      +progress-striped($note, white)
+.progress--highlight-striped
+      +progress-striped($highlight, white)
+
+.stack-header
+      +stack-header(transparent, $dark)
+.stack-header--base
+      +stack-header($base, white)
+.stack-header--true
+      +stack-header($true, white)
+.stack-header--false
+      +stack-header($false, white)
+.stack-header--check
+      +stack-header($check, white)
+.stack-header--note
+      +stack-header($note, white)
+.stack-header--highlight
+      +stack-header($highlight, white)
+
+.panel
+      +panel(rgba(0,0,0,0.15), white)
+.panel--base
+      +panel($base, white)
+.panel--true
+      +panel($true, white)
+.panel--false
+      +panel($false, white)
+.panel--check
+      +panel($check, white)
+.panel--note
+      +panel($note, white)
+.panel--highlight
+      +panel($highlight, white)
+
+.table--base
+      +table($base, white)
+.table--true
+      +table($true, white)
+.table--false
+      +table($false, white)
+.table--check
+      +table($check, white)
+.table--note
+      +table($note, white)
+.table--highlight
+      +table($highlight, white)
+
+.btn
+      +button(rgba(255,255,255,0.2), $dark)
+.btn--base
+      +button($base, white)
+.btn--true
+      +button($true, white)
+.btn--false
+      +button($false, white)
+.btn--check
+      +button($check, white)
+.btn--note
+      +button($note, white)
+.btn--highlight
+      +button($highlight, white)
+.btn--dark
+      +button($dark, white)
+
+.cta-btn--base
+      +ctabutton($base, white)
+.cta-btn--true
+      +ctabutton($true, white)
+.cta-btn--false
+      +ctabutton($false, white)
+.cta-btn--check
+      +ctabutton($check, white)
+.cta-btn--note
+      +ctabutton($note, white)
+.cta-btn--highlight
+      +ctabutton($highlight, white)
+.cta-btn--dark
+      +ctabutton($dark, white)
+
+.btn-pill--base
+      +pillbutton($base, white)
+.btn-pill--true
+      +pillbutton($true, white)
+.btn-pill--false
+      +pillbutton($false, white)
+.btn-pill--check
+      +pillbutton($check, white)
+.btn-pill--note
+      +pillbutton($note, white)
+.btn-pill--highlight
+      +pillbutton($highlight, white)
+.btn-pill--dark
+      +pillbutton($dark, white)
+
+.btn-pill-i--base
+      +pillibutton(white, $base)
+.btn-pill-i--true
+      +pillibutton(white, $true)
+.btn-pill-i--false
+      +pillibutton(white, $false)
+.btn-pill-i--check
+      +pillibutton(white, $check)
+.btn-pill-i--note
+      +pillibutton(white, $note)
+.btn-pill-i--highlight
+      +pillibutton(white, $highlight)
+.btn-pill-i--dark
+      +pillibutton(white, $dark)
+
+.card--main
+      +card(rgba(0,0,0,0.15))
+      padding: 0.5em
+.card--dark
+      +card($dark)
+      padding: 0.5em
+.card--base
+      +card($base)
+      padding: 0.5em
+.card--true
+      +card($true)
+      padding: 0.5em
+.card--false
+      +card($false)
+      padding: 0.5em
+.card--check
+      +card($check)
+      padding: 0.5em
+.card--note
+      +card($note)
+      padding: 0.5em
+.card--highlight
+      +card($highlight)
+      padding: 0.5em
+
+.col-1
+      +gridcalc(12, 1, 1em, 0)
+.col-2
+      +gridcalc(12, 2, 1em, 0)
+.col-3
+      +gridcalc(12, 3, 1em, 0)
+.col-4
+      +gridcalc(12, 4, 1em, 0)
+.col-5
+      +gridcalc(12, 5, 1em, 0)
+.col-6
+      +gridcalc(12, 6, 1em, 0)
+.col-7
+      +gridcalc(12, 7, 1em, 0)
+.col-8
+      +gridcalc(12, 8, 1em, 0)
+.col-9
+      +gridcalc(12, 9, 1em, 0)
+.col-10
+      +gridcalc(12, 10, 1em, 0)
+.col-11
+      +gridcalc(12, 11, 1em, 0)
+.col-12
+      +gridcalc(12, 12, 1em, 0)
+.pull-1
+      margin-left: calc(1 / 12 * 100%)
+.pull-2
+      margin-left: calc(2 / 12 * 100%)
+.pull-3
+      margin-left: calc(3 / 12 * 100%)
+.pull-4
+      margin-left: calc(4 / 12 * 100%)
+.pull-5
+      margin-left: calc(5 / 12 * 100%)
+.pull-6
+      margin-left: calc(6 / 12 * 100%)
+.pull-7
+      margin-left: calc(7 / 12 * 100%)
+.pull-8
+      margin-left: calc(8 / 12 * 100%)
+.pull-9
+      margin-left: calc(9 / 12 * 100%)
+.pull-10
+      margin-left: calc(10 / 12 * 100%)
+.pull-11
+      margin-left: calc(11 / 12 * 100%)
+.pull-12
+      margin-left: calc(12 / 12 * 100%)
+
+.rocket
+      +decor('../img/rocket.svg', 5em)
+.mobile
+      +decor('../img/moblet.svg', 3em)
